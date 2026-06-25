@@ -8,7 +8,7 @@ import {
   StyleSheet,
   ScrollView,
   Alert,
-  I18nManager,
+  Pressable,
 } from 'react-native';
 import { Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -28,6 +28,7 @@ import {
   BTN_YES,
   BTN_CANCEL,
   APP_NAME,
+  BTN_ADD_ROUND,
 } from '../utils/constants';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -36,6 +37,10 @@ type KeypadTarget = 'A' | 'B' | null;
 export default function ScoreboardScreen() {
   const [keypadVisible, setKeypadVisible] = useState(false);
   const [keypadTarget, setKeypadTarget] = useState<KeypadTarget>(null);
+
+  // Current round draft scores
+  const [draftScoreA, setDraftScoreA] = useState<number | null>(null);
+  const [draftScoreB, setDraftScoreB] = useState<number | null>(null);
 
   // Score store
   const teamATotal = useScoreStore((s) => s.teamATotal);
@@ -63,14 +68,14 @@ export default function ScoreboardScreen() {
   const handleKeypadSubmit = useCallback(
     (value: number) => {
       if (keypadTarget === 'A') {
-        addRound(value, 0);
+        setDraftScoreA(value);
       } else if (keypadTarget === 'B') {
-        addRound(0, value);
+        setDraftScoreB(value);
       }
       setKeypadVisible(false);
       setKeypadTarget(null);
     },
-    [keypadTarget, addRound]
+    [keypadTarget]
   );
 
   const handleKeypadClose = useCallback(() => {
@@ -78,13 +83,33 @@ export default function ScoreboardScreen() {
     setKeypadTarget(null);
   }, []);
 
+  const handleAddRound = useCallback(() => {
+    if (draftScoreA === null && draftScoreB === null) {
+      Alert.alert('تنبيه', 'الرجاء إدخال النقاط أولاً');
+      return;
+    }
+
+    const scoreA = draftScoreA ?? 0;
+    const scoreB = draftScoreB ?? 0;
+
+    addRound(scoreA, scoreB);
+
+    // Reset draft scores
+    setDraftScoreA(null);
+    setDraftScoreB(null);
+  }, [draftScoreA, draftScoreB, addRound]);
+
   const handleNewDeal = useCallback(() => {
     Alert.alert('', MSG_CONFIRM_RESET, [
       { text: BTN_CANCEL, style: 'cancel' },
       {
         text: BTN_YES,
         style: 'destructive',
-        onPress: () => resetGame(),
+        onPress: () => {
+          resetGame();
+          setDraftScoreA(null);
+          setDraftScoreB(null);
+        },
       },
     ]);
   }, [resetGame]);
@@ -108,6 +133,8 @@ export default function ScoreboardScreen() {
 
     // Reset scores
     resetGame();
+    setDraftScoreA(null);
+    setDraftScoreB(null);
   }, [winnerSide, getCurrentMatch, recordMatch, rotateAfterWin, teamATotal, teamBTotal, rounds, resetGame]);
 
   const handleCancelWinner = useCallback(() => {
@@ -188,12 +215,31 @@ export default function ScoreboardScreen() {
             color={colors.teamB}
             bgColor={colors.teamBBg}
             onPress={() => handleCirclePress('B')}
+            pendingScore={draftScoreB}
+            teamLabel={TEAM_B_LABEL}
           />
           <ScoreCircle
             color={colors.teamA}
             bgColor={colors.teamABg}
             onPress={() => handleCirclePress('A')}
+            pendingScore={draftScoreA}
+            teamLabel={TEAM_A_LABEL}
           />
+        </View>
+
+        {/* Add Round Button */}
+        <View style={styles.addRoundContainer}>
+          <Pressable
+            disabled={draftScoreA === null && draftScoreB === null}
+            onPress={handleAddRound}
+            style={({ pressed }) => [
+              styles.addRoundButton,
+              (draftScoreA === null && draftScoreB === null) && styles.addRoundButtonDisabled,
+              pressed && styles.addRoundButtonPressed,
+            ]}
+          >
+            <Text style={styles.addRoundText}>{BTN_ADD_ROUND}</Text>
+          </Pressable>
         </View>
 
         {/* New Deal Button */}
@@ -296,9 +342,9 @@ const styles = StyleSheet.create({
   scoreContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     marginTop: spacing.xl,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: spacing.lg,
   },
   scoreColumn: {
     flex: 1,
@@ -325,7 +371,7 @@ const styles = StyleSheet.create({
   },
   circlesContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: spacing.xl,
     paddingHorizontal: spacing.lg,
@@ -334,6 +380,40 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: spacing.lg,
     marginBottom: spacing.md,
+  },
+  addRoundContainer: {
+    alignItems: 'center',
+    marginTop: spacing.xl,
+    paddingHorizontal: spacing.lg,
+  },
+  addRoundButton: {
+    width: '100%',
+    backgroundColor: colors.primary,
+    paddingVertical: spacing.md,
+    borderRadius: borderRadius.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  addRoundButtonDisabled: {
+    backgroundColor: colors.surfaceLight,
+    shadowOpacity: 0,
+    elevation: 0,
+    opacity: 0.5,
+  },
+  addRoundButtonPressed: {
+    opacity: 0.8,
+    transform: [{ scale: 0.98 }],
+  },
+  addRoundText: {
+    color: '#FFFFFF',
+    fontSize: fontSize.md,
+    fontWeight: '700',
+    writingDirection: 'rtl',
   },
   newDealButton: {
     paddingVertical: spacing.sm,

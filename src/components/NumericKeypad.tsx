@@ -103,7 +103,7 @@ const NumericKeypad: React.FC<NumericKeypadProps> = ({
 
       case 'submit': {
         const numericValue = parseInt(inputValue, 10);
-        if (!isNaN(numericValue) && numericValue > 0) {
+        if (!isNaN(numericValue) && numericValue >= 0) {
           onSubmit(numericValue);
         }
         break;

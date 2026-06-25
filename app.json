@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "مدير البصرة",
+    "name": "مدير الباصرة",
     "slug": "basra-manager",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,7 +22,10 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "supportsRTL": true
+      "supportsRTL": true,
+      "eas": {
+        "projectId": "0f51a392-7748-4a73-b962-ac151a92028f"
+      }
     },
     "plugins": [
       "expo-asset",

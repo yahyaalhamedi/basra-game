@@ -127,8 +127,8 @@ const RoundHistoryTable: React.FC<RoundHistoryTableProps> = ({
       {/* ── Table Header Row ──────────────────────────────── */}
       <View style={styles.tableHeader}>
         <Text style={styles.headerCell}>الجولة</Text>
-        <Text style={styles.headerCell}>{currentTeamA ? teamAName : '---'}</Text>
-        <Text style={styles.headerCell}>{currentTeamB ? teamBName : '---'}</Text>
+        <Text style={[styles.headerCell, {color: colors.teamA}]}>{currentTeamA ? teamAName : '---'}</Text>
+        <Text style={[styles.headerCell, {color: colors.teamB}]}>{currentTeamB ? teamBName : '---'}</Text>
       </View>
 
       {/* ── Table Body (FlatList) ─────────────────────────── */}
@@ -156,10 +156,10 @@ const styles = StyleSheet.create({
 
   /** Section title row with optional undo button */
   sectionHeader: {
-    flexDirection: 'row-reverse',       // RTL
+    // flexDirection: 'row',       // RTL
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: spacing.sm,
+    marginBottom: spacing.md,
     paddingHorizontal: spacing.xs,
   },
   sectionTitle: {
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.md,
     marginBottom: spacing.xs,
   },
-  headerCell: {
+  headerCell: { //
     flex: 1,
     fontSize: fontSize.sm,             // 14
     fontWeight: '600',

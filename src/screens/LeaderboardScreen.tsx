@@ -85,10 +85,10 @@ export default function LeaderboardScreen() {
             <Text style={[styles.statText, styles.winsText]}>{item.wins}</Text>
           </View>
 
-          {/* Win % */}
+          {/* lose */}
           <View style={styles.statCell}>
-            <Text style={styles.statText}>
-              {calcWinPercentage(item.wins, item.gamesPlayed)}
+            <Text style={styles.lossesText}>
+              {item.losses}
             </Text>
           </View>
         </View>
@@ -133,7 +133,7 @@ export default function LeaderboardScreen() {
               <Text style={styles.headerCellText}>فوز</Text>
             </View>
             <View style={styles.statCell}>
-              <Text style={styles.headerCellText}>%</Text>
+              <Text style={styles.headerCellText}>خسر</Text>
             </View>
           </View>
 
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
     fontSize: fontSize.sm,
     fontWeight: '700',
-    textAlign: 'center',
+    textAlign: 'left',
     writingDirection: 'rtl',
   },
   list: {
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize.sm,
     fontWeight: '600',
     writingDirection: 'rtl',
-    textAlign: 'right',
+    textAlign: 'left',
   },
   statCell: {
     width: 48,
@@ -274,6 +274,9 @@ const styles = StyleSheet.create({
   },
   winsText: {
     color: colors.primary,
+  },
+  lossesText: {
+    color: colors.error,
   },
   resetContainer: {
     paddingHorizontal: spacing.md,

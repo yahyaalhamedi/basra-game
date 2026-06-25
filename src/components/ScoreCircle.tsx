@@ -28,6 +28,10 @@ export interface ScoreCircleProps {
   bgColor: string;
   /** Callback invoked when the circle is pressed */
   onPress: () => void;
+  /** The pending score of the team for the current round */
+  pendingScore: number | null;
+  /** Team label displayed beneath the circle */
+  teamLabel: string;
 }
 
 // ── Component ──────────────────────────────────────────────────
@@ -35,6 +39,8 @@ const ScoreCircle: React.FC<ScoreCircleProps> = ({
   color,
   bgColor,
   onPress,
+  pendingScore,
+  teamLabel,
 }) => {
   // Animated scale value for press feedback
   const scaleAnim = useRef(new Animated.Value(1)).current;
@@ -73,7 +79,6 @@ const ScoreCircle: React.FC<ScoreCircleProps> = ({
 
   return (
     <View style={styles.container}>
-
       {/* ── Circular Button ────────────────────────────────── */}
       <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
         <Pressable
@@ -81,7 +86,6 @@ const ScoreCircle: React.FC<ScoreCircleProps> = ({
           onPressIn={handlePressIn}
           onPressOut={handlePressOut}
           accessibilityRole="button"
-
           style={[
             styles.circle,
             {
@@ -90,9 +94,14 @@ const ScoreCircle: React.FC<ScoreCircleProps> = ({
             },
           ]}
         >
-          <MaterialCommunityIcons name="plus" size={48} color={color} />
+          {pendingScore === null ? (
+            <MaterialCommunityIcons name="plus" size={48} color={color} />
+          ) : (
+            <Text style={[styles.scoreText, { color }]}>{pendingScore}</Text>
+          )}
         </Pressable>
       </Animated.View>
+      <Text style={styles.label}>{teamLabel}</Text>
     </View>
   );
 };
@@ -108,7 +117,7 @@ const styles = StyleSheet.create({
 
   /** Giant score number displayed above the circle */
   scoreText: {
-    fontSize: fontSize.giant,       // 56
+    fontSize: fontSize.xxl,         // 40 (fits nicely in 130 circle)
     fontWeight: '800',
     textAlign: 'center',
     includeFontPadding: false,      // tighter vertical spacing on Android

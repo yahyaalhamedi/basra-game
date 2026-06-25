@@ -26,6 +26,7 @@ export const BTN_CANCEL = 'إلغاء';
 export const BTN_SAVE = 'حفظ';
 export const BTN_DELETE = 'حذف';
 export const BTN_EDIT = 'تعديل';
+export const BTN_ADD_ROUND = 'سجل الجولة';
 
 /** Dialog messages */
 export const MSG_WINNER = 'فاز الفريق!';
