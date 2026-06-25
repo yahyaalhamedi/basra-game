@@ -123,7 +123,7 @@ export default function ScoreboardScreen() {
     ? `${currentTeamB.player1} / ${currentTeamB.player2}`
     : TEAM_B_LABEL;
 
-  const winnerLabel = winnerSide === 'A' ? TEAM_A_LABEL : TEAM_B_LABEL;
+  const winnerLabel = winnerSide === 'A' ? teamAName : teamBName;
   const winnerColor = winnerSide === 'A' ? colors.teamA : colors.teamB;
   const winnerScore = winnerSide === 'A' ? teamATotal : teamBTotal;
   const loserScore = winnerSide === 'A' ? teamBTotal : teamATotal;
@@ -143,13 +143,14 @@ export default function ScoreboardScreen() {
         {/* Current Match Banner */}
         {(currentTeamA || currentTeamB) && (
           <View style={styles.matchBanner}>
-            <Text style={styles.matchBannerTeamA}>
-              {currentTeamA ? `${currentTeamA.player1} / ${currentTeamA.player2}` : '---'}
+            <Text style={styles.matchBannerTeamB}>
+              {currentTeamB ? teamBName : '---'}
             </Text>
             <Text style={styles.matchBannerVs}>ضد</Text>
-            <Text style={styles.matchBannerTeamB}>
-              {currentTeamB ? `${currentTeamB.player1} / ${currentTeamB.player2}` : '---'}
+            <Text style={styles.matchBannerTeamA}>
+              {currentTeamA ? teamAName : '---'}
             </Text>
+            
           </View>
         )}
 
@@ -157,9 +158,9 @@ export default function ScoreboardScreen() {
         <View style={styles.scoreContainer}>
           {/* Team B (Right in RTL = shows on right) */}
           <View style={styles.scoreColumn}>
-            <Text style={[styles.teamLabel, { color: colors.teamB }]}>
+            {/* <Text style={[styles.teamLabel, { color: colors.teamB }]}>
               {TEAM_B_LABEL}
-            </Text>
+            </Text> */}
             <Text style={[styles.scoreValue, { color: colors.teamB }]}>
               {teamBTotal}
             </Text>
@@ -172,9 +173,9 @@ export default function ScoreboardScreen() {
 
           {/* Team A (Left in RTL = shows on left) */}
           <View style={styles.scoreColumn}>
-            <Text style={[styles.teamLabel, { color: colors.teamA }]}>
+            {/* <Text style={[styles.teamLabel, { color: colors.teamA }]}>
               {TEAM_A_LABEL}
-            </Text>
+            </Text> */}
             <Text style={[styles.scoreValue, { color: colors.teamA }]}>
               {teamATotal}
             </Text>
@@ -184,15 +185,11 @@ export default function ScoreboardScreen() {
         {/* Score Input Circles */}
         <View style={styles.circlesContainer}>
           <ScoreCircle
-            label={TEAM_B_LABEL}
-            score={teamBTotal}
             color={colors.teamB}
             bgColor={colors.teamBBg}
             onPress={() => handleCirclePress('B')}
           />
           <ScoreCircle
-            label={TEAM_A_LABEL}
-            score={teamATotal}
             color={colors.teamA}
             bgColor={colors.teamABg}
             onPress={() => handleCirclePress('A')}

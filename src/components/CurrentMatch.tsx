@@ -36,7 +36,6 @@ const CurrentMatch: React.FC<CurrentMatchProps> = ({ teamA, teamB }) => {
           <View style={styles.matchContainer}>
             {/* ── Team A (emerald) ── */}
             <View style={[styles.teamBlock, styles.teamABg]}>
-              <Text style={styles.teamLabel}>لنا</Text>
               <Text style={styles.teamAName}>
                 {formatTeamName(teamA.player1, teamA.player2)}
               </Text>
@@ -51,7 +50,6 @@ const CurrentMatch: React.FC<CurrentMatchProps> = ({ teamA, teamB }) => {
 
             {/* ── Team B (amber) ── */}
             <View style={[styles.teamBlock, styles.teamBBg]}>
-              <Text style={styles.teamLabelB}>لهم</Text>
               <Text style={styles.teamBName}>
                 {formatTeamName(teamB.player1, teamB.player2)}
               </Text>

@@ -20,6 +20,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors, spacing, borderRadius, fontSize } from '../theme/theme';
 import { TEAM_A_LABEL, TEAM_B_LABEL } from '../utils/constants';
 import type { ScoreRound } from '../models/types';
+import { useRotationStore } from '../store/useRotationStore';
 
 // ── Props ──────────────────────────────────────────────────────
 export interface RoundHistoryTableProps {
@@ -34,6 +35,16 @@ const RoundHistoryTable: React.FC<RoundHistoryTableProps> = ({
   rounds,
   onUndoLast,
 }) => {
+  const getCurrentMatch = useRotationStore((s) => s.getCurrentMatch);
+  const { teamA: currentTeamA, teamB: currentTeamB } = getCurrentMatch();
+
+  const teamAName = currentTeamA
+      ? `${currentTeamA.player1} / ${currentTeamA.player2}`
+      : TEAM_A_LABEL;
+    const teamBName = currentTeamB
+      ? `${currentTeamB.player1} / ${currentTeamB.player2}`
+      : TEAM_B_LABEL;
+  
   const hasRounds = rounds.length > 0;
 
   /**
@@ -116,8 +127,8 @@ const RoundHistoryTable: React.FC<RoundHistoryTableProps> = ({
       {/* ── Table Header Row ──────────────────────────────── */}
       <View style={styles.tableHeader}>
         <Text style={styles.headerCell}>الجولة</Text>
-        <Text style={styles.headerCell}>{TEAM_A_LABEL}</Text>
-        <Text style={styles.headerCell}>{TEAM_B_LABEL}</Text>
+        <Text style={styles.headerCell}>{currentTeamA ? teamAName : '---'}</Text>
+        <Text style={styles.headerCell}>{currentTeamB ? teamBName : '---'}</Text>
       </View>
 
       {/* ── Table Body (FlatList) ─────────────────────────── */}

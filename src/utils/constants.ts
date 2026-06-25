@@ -6,7 +6,7 @@
 export const TARGET_SCORE = 52;
 
 /** App name in Arabic */
-export const APP_NAME = 'مدير البصرة';
+export const APP_NAME = 'مدير الباصرة';
 
 /** Team labels */
 export const TEAM_A_LABEL = 'لنا';

@@ -22,10 +22,6 @@ import { colors, spacing, fontSize } from '../theme/theme';
 
 // ── Props ──────────────────────────────────────────────────────
 export interface ScoreCircleProps {
-  /** Team label displayed below the circle (e.g. 'لنا' or 'لهم') */
-  label: string;
-  /** Current cumulative score for this team */
-  score: number;
   /** Team accent color used for text, border, and icon highlights */
   color: string;
   /** Semi-transparent team background color for the circle fill */
@@ -36,8 +32,6 @@ export interface ScoreCircleProps {
 
 // ── Component ──────────────────────────────────────────────────
 const ScoreCircle: React.FC<ScoreCircleProps> = ({
-  label,
-  score,
   color,
   bgColor,
   onPress,
@@ -79,8 +73,6 @@ const ScoreCircle: React.FC<ScoreCircleProps> = ({
 
   return (
     <View style={styles.container}>
-      {/* ── Running Total ──────────────────────────────────── */}
-      <Text style={[styles.scoreText, { color }]}>{score}</Text>
 
       {/* ── Circular Button ────────────────────────────────── */}
       <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
@@ -89,7 +81,7 @@ const ScoreCircle: React.FC<ScoreCircleProps> = ({
           onPressIn={handlePressIn}
           onPressOut={handlePressOut}
           accessibilityRole="button"
-          accessibilityLabel={`${label} — إضافة نقاط`}
+
           style={[
             styles.circle,
             {
@@ -101,9 +93,6 @@ const ScoreCircle: React.FC<ScoreCircleProps> = ({
           <MaterialCommunityIcons name="plus" size={48} color={color} />
         </Pressable>
       </Animated.View>
-
-      {/* ── Team Label ─────────────────────────────────────── */}
-      <Text style={styles.label}>{label}</Text>
     </View>
   );
 };
