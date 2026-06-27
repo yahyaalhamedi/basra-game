@@ -29,6 +29,7 @@ import {
   BTN_CANCEL,
   APP_NAME,
   BTN_ADD_ROUND,
+  TAB_SCOREBOARD,
 } from '../utils/constants';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -54,7 +55,7 @@ export default function ScoreboardScreen() {
   const dismissWinner = useScoreStore((s) => s.dismissWinner);
 
   // Rotation store
-  const getCurrentMatch = useRotationStore((s) => s.getCurrentMatch);
+  const teams = useRotationStore((s) => s.teams);
   const rotateAfterWin = useRotationStore((s) => s.rotateAfterWin);
 
   // Tournament store
@@ -117,7 +118,8 @@ export default function ScoreboardScreen() {
   const handleStartNextGame = useCallback(() => {
     if (!winnerSide) return;
 
-    const { teamA, teamB } = getCurrentMatch();
+    const teamA = teams.length > 0 ? teams[0] : null;
+    const teamB = teams.length > 1 ? teams[1] : null;
     if (teamA && teamB) {
       const winner = winnerSide === 'A' ? teamA : teamB;
       const loser = winnerSide === 'A' ? teamB : teamA;
@@ -135,14 +137,16 @@ export default function ScoreboardScreen() {
     resetGame();
     setDraftScoreA(null);
     setDraftScoreB(null);
-  }, [winnerSide, getCurrentMatch, recordMatch, rotateAfterWin, teamATotal, teamBTotal, rounds, resetGame]);
+  }, [winnerSide, teams, recordMatch, rotateAfterWin, teamATotal, teamBTotal, rounds, resetGame]);
 
   const handleCancelWinner = useCallback(() => {
     dismissWinner();
   }, [dismissWinner]);
 
-  // Determine current match team names for display
-  const { teamA: currentTeamA, teamB: currentTeamB } = getCurrentMatch();
+  // Determine current match team names for display — derived directly from
+  // reactive `teams` slice so the component re-renders on every team change.
+  const currentTeamA = teams.length > 0 ? teams[0] : null;
+  const currentTeamB = teams.length > 1 ? teams[1] : null;
   const teamAName = currentTeamA
     ? `${currentTeamA.player1} / ${currentTeamA.player2}`
     : TEAM_A_LABEL;
@@ -159,7 +163,7 @@ export default function ScoreboardScreen() {
     <SafeAreaView style={styles.container} edges={['top']}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>{APP_NAME}</Text>
+        <Text style={styles.headerTitle}>{TAB_SCOREBOARD}</Text>
       </View>
 
       <ScrollView
@@ -168,22 +172,36 @@ export default function ScoreboardScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* Current Match Banner */}
-        {(currentTeamA || currentTeamB) && (
+        {/* {(currentTeamA || currentTeamB) && ( */}
           <View style={styles.matchBanner}>
-            <Text style={styles.matchBannerTeamB}>
-              {currentTeamB ? teamBName : '---'}
+            <Text style={styles.matchBannerTeamA}>
+              {currentTeamA ? teamAName : TEAM_A_LABEL}
             </Text>
             <Text style={styles.matchBannerVs}>ضد</Text>
-            <Text style={styles.matchBannerTeamA}>
-              {currentTeamA ? teamAName : '---'}
+            <Text style={styles.matchBannerTeamB}>
+              {currentTeamB ? teamBName : TEAM_B_LABEL}
             </Text>
-            
           </View>
-        )}
+        {/* )} */}
 
         {/* Score Display */}
         <View style={styles.scoreContainer}>
           {/* Team B (Right in RTL = shows on right) */}
+           {/* Team A (Left in RTL = shows on left) */}
+          <View style={styles.scoreColumn}>
+            {/* <Text style={[styles.teamLabel, { color: colors.teamA }]}>
+              {TEAM_A_LABEL}
+            </Text> */}
+            <Text style={[styles.scoreValue, { color: colors.teamA }]}>
+              {teamATotal}
+            </Text>
+          </View>
+
+          {/* Divider */}
+          <View style={styles.scoreDivider}>
+            <Text style={styles.scoreDividerText}>-</Text>
+          </View>
+
           <View style={styles.scoreColumn}>
             {/* <Text style={[styles.teamLabel, { color: colors.teamB }]}>
               {TEAM_B_LABEL}
@@ -193,37 +211,25 @@ export default function ScoreboardScreen() {
             </Text>
           </View>
 
-          {/* Divider */}
-          <View style={styles.scoreDivider}>
-            <Text style={styles.scoreDividerText}>-</Text>
-          </View>
+          
 
-          {/* Team A (Left in RTL = shows on left) */}
-          <View style={styles.scoreColumn}>
-            {/* <Text style={[styles.teamLabel, { color: colors.teamA }]}>
-              {TEAM_A_LABEL}
-            </Text> */}
-            <Text style={[styles.scoreValue, { color: colors.teamA }]}>
-              {teamATotal}
-            </Text>
-          </View>
+         
         </View>
 
         {/* Score Input Circles */}
         <View style={styles.circlesContainer}>
           <ScoreCircle
-            color={colors.teamB}
-            bgColor={colors.teamBBg}
-            onPress={() => handleCirclePress('B')}
-            pendingScore={draftScoreB}
-            teamLabel={TEAM_B_LABEL}
-          />
-          <ScoreCircle
             color={colors.teamA}
             bgColor={colors.teamABg}
             onPress={() => handleCirclePress('A')}
             pendingScore={draftScoreA}
-            teamLabel={TEAM_A_LABEL}
+            // teamLabel={TEAM_A_LABEL}
+          />
+          <ScoreCircle
+            color={colors.teamB}
+            bgColor={colors.teamBBg}
+            onPress={() => handleCirclePress('B')}
+            pendingScore={draftScoreB}
           />
         </View>
 
@@ -262,7 +268,7 @@ export default function ScoreboardScreen() {
       {/* Numeric Keypad Modal */}
       <NumericKeypad
         visible={keypadVisible}
-        teamLabel={keypadTarget === 'A' ? TEAM_A_LABEL : TEAM_B_LABEL}
+        teamLabel={keypadTarget === 'A' ? teamAName : teamBName}
         teamColor={keypadTarget === 'A' ? colors.teamA : colors.teamB}
         onSubmit={handleKeypadSubmit}
         onClose={handleKeypadClose}

@@ -44,9 +44,6 @@ export default function RotationScreen() {
   const deleteTeam = useRotationStore((s) => s.deleteTeam);
   const reorderTeams = useRotationStore((s) => s.reorderTeams);
   const resetAll = useRotationStore((s) => s.resetAll);
-  const getCurrentMatch = useRotationStore((s) => s.getCurrentMatch);
-
-  const { teamA, teamB } = getCurrentMatch();
 
   const handleAddTeam = useCallback(
     (player1: string, player2: string) => {
@@ -130,6 +127,7 @@ export default function RotationScreen() {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>دوران اللاعبين</Text>
       </View>
+      
 
       <ScrollView
         style={styles.scrollView}
@@ -137,7 +135,7 @@ export default function RotationScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* Current Match */}
-        <CurrentMatch teamA={teamA} teamB={teamB} />
+        {/* <CurrentMatch teamA={teamA} teamB={teamB} /> */}
 
         {/* Add Team Form */}
         <AddTeamForm onAddTeam={handleAddTeam} />
@@ -218,12 +216,12 @@ export default function RotationScreen() {
                     <Text style={styles.teamName}>
                       {team.player1} / {team.player2}
                     </Text>
+                  </View>
                     {index < 2 && (
                       <View style={styles.playingBadge}>
                         <Text style={styles.playingBadgeText}>يلعب الآن</Text>
                       </View>
                     )}
-                  </View>
 
                   {/* Actions */}
                   <View style={styles.teamActions}>
@@ -280,7 +278,7 @@ export default function RotationScreen() {
         )}
 
         {/* Match History */}
-        <MatchHistoryList matchHistory={matchHistory} />
+        {teams.length > 0 && <MatchHistoryList matchHistory={matchHistory} />}
 
         {/* Reset Button */}
         {teams.length > 0 && (
@@ -322,9 +320,9 @@ const styles = StyleSheet.create({
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-end',
-    marginTop: spacing.lg,
-    marginBottom: spacing.sm,
+    justifyContent: 'flex-start',
+    marginTop: spacing.md,
+    marginBottom: spacing.md,
   },
   sectionTitle: {
     fontSize: fontSize.lg,
@@ -388,6 +386,7 @@ const styles = StyleSheet.create({
   },
   teamInfo: {
     flex: 1,
+    alignItems: 'flex-start',
   },
   teamName: {
     color: colors.textPrimary,
@@ -401,7 +400,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.sm,
     paddingVertical: 2,
     borderRadius: borderRadius.sm,
-    alignSelf: 'flex-end',
+    alignSelf: 'flex-start',
     marginTop: spacing.xs,
   },
   playingBadgeText: {

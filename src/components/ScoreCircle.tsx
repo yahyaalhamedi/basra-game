@@ -30,8 +30,6 @@ export interface ScoreCircleProps {
   onPress: () => void;
   /** The pending score of the team for the current round */
   pendingScore: number | null;
-  /** Team label displayed beneath the circle */
-  teamLabel: string;
 }
 
 // ── Component ──────────────────────────────────────────────────
@@ -40,7 +38,6 @@ const ScoreCircle: React.FC<ScoreCircleProps> = ({
   bgColor,
   onPress,
   pendingScore,
-  teamLabel,
 }) => {
   // Animated scale value for press feedback
   const scaleAnim = useRef(new Animated.Value(1)).current;
@@ -101,7 +98,6 @@ const ScoreCircle: React.FC<ScoreCircleProps> = ({
           )}
         </Pressable>
       </Animated.View>
-      <Text style={styles.label}>{teamLabel}</Text>
     </View>
   );
 };

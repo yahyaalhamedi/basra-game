@@ -14,13 +14,12 @@ import { Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTournamentStore } from '../store/useTournamentStore';
+import { useRotationStore } from '../store/useRotationStore';
 import { TournamentEntry } from '../models/types';
 import { colors, spacing, fontSize, borderRadius } from '../theme/theme';
-import { calcWinPercentage, formatTeamName } from '../utils/helpers';
+import { formatTeamName } from '../utils/helpers';
 import {
   LEADERBOARD_TITLE,
-  BTN_RESET,
-  MSG_CONFIRM_RESET,
   BTN_YES,
   BTN_CANCEL,
 } from '../utils/constants';
@@ -28,11 +27,32 @@ import {
 const MEDAL_EMOJIS = ['🥇', '🥈', '🥉'];
 
 export default function LeaderboardScreen() {
-  const getLeaderboard = useTournamentStore((s) => s.getLeaderboard);
   const resetTournament = useTournamentStore((s) => s.resetTournament);
+  // Subscribe directly to reactive slices so component re-renders on change
   const entries = useTournamentStore((s) => s.entries);
+  const teams = useRotationStore((s) => s.teams);
 
-  const leaderboard = getLeaderboard();
+  // Build a full leaderboard: every team in the rotation queue should appear,
+  // even if they haven't played yet (wins = 0, losses = 0).
+  const leaderboard: TournamentEntry[] = [
+    // Start from recorded entries
+    ...entries,
+    // Add synthetic 0-stat entries for teams not yet in the tournament store
+    ...teams
+      .filter((t) => !entries.some((e) => e.teamId === t.id))
+      .map((t) => ({
+        teamId: t.id,
+        team: t,
+        gamesPlayed: 0,
+        wins: 0,
+        losses: 0,
+      })),
+  ].sort((a, b) => {
+    // Primary: most wins first
+    if (b.wins !== a.wins) return b.wins - a.wins;
+    // Secondary: fewest losses (fewer losses = better)
+    return a.losses - b.losses;
+  });
 
   const handleReset = useCallback(() => {
     Alert.alert('', 'هل أنت متأكد من إعادة تعيين البطولة؟', [

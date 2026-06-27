@@ -57,9 +57,9 @@ const KEYS: KeyDef[][] = [
     { type: 'digit', value: '9' },
   ],
   [
-    { type: 'clear' },
-    { type: 'digit', value: '0' },
     { type: 'submit' },
+    { type: 'digit', value: '0' },
+    { type: 'clear' },
   ],
 ];
 
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
 
   /** Header row: team label + close icon */
   header: {
-    flexDirection: 'row-reverse',           // RTL: label on the right
+    flexDirection: 'row',           // RTL: label on the right
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: spacing.md,
@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     marginBottom: spacing.lg,
     minHeight: 72,
-    alignItems: 'flex-end',                 // right-aligned for RTL
+    alignItems: 'flex-start',                 // right-aligned for RTL
     justifyContent: 'center',
   },
   displayText: {

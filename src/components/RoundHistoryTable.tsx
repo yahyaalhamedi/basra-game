@@ -76,14 +76,14 @@ const RoundHistoryTable: React.FC<RoundHistoryTableProps> = ({
         {/* Round number */}
         <Text style={styles.cellRound}>{roundNumber}</Text>
 
-        {/* Team A score */}
-        <Text style={[styles.cellScore, { color: colors.teamA }]}>
-          {item.teamAScore}
-        </Text>
-
         {/* Team B score */}
         <Text style={[styles.cellScore, { color: colors.teamB }]}>
           {item.teamBScore}
+        </Text>
+
+        {/* Team A score */}
+        <Text style={[styles.cellScore, { color: colors.teamA }]}>
+          {item.teamAScore}
         </Text>
       </View>
     );
@@ -127,8 +127,8 @@ const RoundHistoryTable: React.FC<RoundHistoryTableProps> = ({
       {/* ── Table Header Row ──────────────────────────────── */}
       <View style={styles.tableHeader}>
         <Text style={styles.headerCell}>الجولة</Text>
-        <Text style={[styles.headerCell, {color: colors.teamA}]}>{currentTeamA ? teamAName : '---'}</Text>
-        <Text style={[styles.headerCell, {color: colors.teamB}]}>{currentTeamB ? teamBName : '---'}</Text>
+        <Text style={[styles.headerCell, {color: colors.teamB}]}>{currentTeamB ? teamBName : TEAM_B_LABEL}</Text>
+        <Text style={[styles.headerCell, {color: colors.teamA}]}>{currentTeamA ? teamAName : TEAM_A_LABEL}</Text>
       </View>
 
       {/* ── Table Body (FlatList) ─────────────────────────── */}
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
 
   /** Section title row with optional undo button */
   sectionHeader: {
-    // flexDirection: 'row',       // RTL
+    flexDirection: 'row',       // RTL
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: spacing.md,

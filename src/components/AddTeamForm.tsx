@@ -45,6 +45,9 @@ const AddTeamForm: React.FC<AddTeamFormProps> = ({ onAddTeam }) => {
 
   return (
     <View style={styles.card}>
+      <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>أضف فريق جديد</Text>
+        </View>
       {/* ── Player 1 input ── */}
       <TextInput
         style={styles.input}
@@ -90,7 +93,22 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: borderRadius.lg,
     padding: spacing.md,
+    marginTop: spacing.sm,
     gap: spacing.sm,
+  },
+
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginBottom: spacing.sm,
+  },
+
+  sectionTitle: {
+    fontSize: fontSize.lg,
+    fontWeight: '700',
+    color: colors.textPrimary,
+    writingDirection: 'rtl',
   },
 
   /** Shared input styling */

@@ -16,7 +16,7 @@ export function generateId(): string {
  */
 export function formatDate(isoString: string): string {
   const date = new Date(isoString);
-  return date.toLocaleDateString('ar-SA', {
+  return date.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'numeric',
     day: 'numeric',

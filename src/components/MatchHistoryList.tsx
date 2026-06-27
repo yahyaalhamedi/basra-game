@@ -23,7 +23,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { colors, spacing, borderRadius, fontSize } from '../theme/theme';
-import { formatDate, formatTeamName, toArabicNumerals } from '../utils/helpers';
+import { formatDate, formatTeamName } from '../utils/helpers';
 import { MATCH_HISTORY_TITLE } from '../utils/constants';
 import type { MatchRecord } from '../models/types';
 
@@ -66,7 +66,7 @@ const MatchItem: React.FC<{ match: MatchRecord }> = ({ match }) => (
     {/* Score & date */}
     <View style={styles.metaRow}>
       <Text style={styles.score}>
-        {toArabicNumerals(match.winnerScore)} - {toArabicNumerals(match.loserScore)}
+        {match.winnerScore} - {match.loserScore}
       </Text>
       <Text style={styles.date}>{formatDate(match.playedAt)}</Text>
     </View>
@@ -148,13 +148,14 @@ const styles = StyleSheet.create({
 
   /** Toggle header row */
   header: {
-    flexDirection: 'row-reverse', // RTL
+    flexDirection: 'row', // RTL
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: colors.surface,
     paddingVertical: spacing.md,
     paddingHorizontal: spacing.md,
-    borderRadius: borderRadius.lg,
+    // borderRadius: borderRadius.lg,
+    marginBottom: 2,
     minHeight: 52,
   },
 
@@ -177,10 +178,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     paddingHorizontal: spacing.md,
     paddingBottom: spacing.md,
+    paddingTop: spacing.md
   },
 
   /** Individual match card */
   matchCard: {
+    // flexDirection: 'column-',
     backgroundColor: colors.surfaceLight,
     borderRadius: borderRadius.md,
     padding: spacing.md,
@@ -188,7 +191,7 @@ const styles = StyleSheet.create({
 
   /** Row inside match card (winner / loser) */
   matchRow: {
-    flexDirection: 'row-reverse', // RTL
+    flexDirection: 'row', // RTL
     alignItems: 'center',
     marginBottom: spacing.xs,
   },
@@ -196,7 +199,7 @@ const styles = StyleSheet.create({
   /** Trophy emoji */
   trophy: {
     fontSize: fontSize.md,
-    marginLeft: spacing.sm,
+    // marginLeft: spacing.sm,
   },
 
   /** Invisible spacer to align loser text with winner text */
@@ -210,7 +213,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.primary,
     writingDirection: 'rtl',
-    flex: 1,
+    paddingHorizontal: spacing.sm,
     textAlign: 'right',
   },
 
@@ -219,7 +222,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize.sm,
     color: colors.textMuted,
     writingDirection: 'rtl',
-    flex: 1,
+    paddingHorizontal: spacing.sm,
     textAlign: 'right',
   },
 

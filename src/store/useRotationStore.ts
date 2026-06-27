@@ -71,21 +71,11 @@ export const useRotationStore = create<RotationState>()(
         // Remove both active playing teams to get the queue of remaining teams
         const remainingTeams = teams.filter((t) => t.id !== teamA.id && t.id !== teamB.id);
 
-        let newTeams: Team[];
-        if (winnerSide === 'A') {
-          // Team A stays at index 0 (Left/Us, Green). Team B (loser) goes to the end of the queue.
-          // The next challenger (first of remaining) takes index 1.
-          newTeams = [teamA, ...remainingTeams, teamB];
-        } else {
-          // Team B stays at index 1 (Right/Them, Orange). Team A (loser) goes to the end of the queue.
-          // The next challenger (first of remaining) takes index 0.
-          if (remainingTeams.length > 0) {
-            newTeams = [remainingTeams[0], teamB, ...remainingTeams.slice(1), teamA];
-          } else {
-            // Only 2 teams total, they stay in their respective positions.
-            newTeams = [teamA, teamB];
-          }
-        }
+        // The winner ALWAYS moves to index 0 (first position).
+        // The loser ALWAYS goes to the end of the queue.
+        // const winner = winnerSide === 'A' ? teamA : teamB;
+        // const loserTeam = winnerSide === 'A' ? teamB : teamA;
+        const newTeams: Team[] = [winner, ...remainingTeams, loser];
 
         set({
           teams: newTeams,
