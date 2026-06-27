@@ -35,8 +35,9 @@ const RoundHistoryTable: React.FC<RoundHistoryTableProps> = ({
   rounds,
   onUndoLast,
 }) => {
-  const getCurrentMatch = useRotationStore((s) => s.getCurrentMatch);
-  const { teamA: currentTeamA, teamB: currentTeamB } = getCurrentMatch();
+  const teams = useRotationStore((s) => s.teams);
+  const currentTeamA = teams.length > 0 ? teams[0] : null;
+  const currentTeamB = teams.length > 1 ? teams[1] : null;
 
   const teamAName = currentTeamA
       ? `${currentTeamA.player1} / ${currentTeamA.player2}`

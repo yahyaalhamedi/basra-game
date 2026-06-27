@@ -11,8 +11,8 @@ export function generateId(): string {
 }
 
 /**
- * Format a date string to Arabic-friendly display.
- * Example: "٢٠٢٦/٦/٢٥ ٣:٣٠ م"
+ * Format a date string to a readable display.
+ * Example: "6/25/2026, 03:30 PM"
  */
 export function formatDate(isoString: string): string {
   const date = new Date(isoString);
@@ -31,24 +31,4 @@ export function formatDate(isoString: string): string {
  */
 export function formatTeamName(player1: string, player2: string): string {
   return `${player1} / ${player2}`;
-}
-
-/**
- * Calculate win percentage.
- */
-export function calcWinPercentage(wins: number, gamesPlayed: number): string {
-  if (gamesPlayed === 0) return '0%';
-  return `${Math.round((wins / gamesPlayed) * 100)}%`;
-}
-
-/**
- * Convert a number to Arabic-Indic numerals.
- */
-export function toArabicNumerals(num: number): string {
-  const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-  return num
-    .toString()
-    .split('')
-    .map((d) => (d >= '0' && d <= '9' ? arabicDigits[parseInt(d)] : d))
-    .join('');
 }

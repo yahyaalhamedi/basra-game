@@ -86,14 +86,6 @@ export const useRotationStore = create<RotationState>()(
       resetAll: () => {
         set({ ...initialState });
       },
-
-      getCurrentMatch: () => {
-        const teams = get().teams;
-        return {
-          teamA: teams.length > 0 ? teams[0] : null,
-          teamB: teams.length > 1 ? teams[1] : null,
-        };
-      },
     }),
     {
       name: 'basra-rotation-storage',

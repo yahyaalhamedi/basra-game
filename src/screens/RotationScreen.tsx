@@ -2,7 +2,7 @@
 // Basra Manager — Rotation Screen (دوران اللاعبين)
 // ============================================================
 
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   StyleSheet,
@@ -10,16 +10,12 @@ import {
   Alert,
   TextInput,
   TouchableOpacity,
-  FlatList,
-  Animated as RNAnimated,
 } from 'react-native';
 import { Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRotationStore } from '../store/useRotationStore';
-import CurrentMatch from '../components/CurrentMatch';
 import AddTeamForm from '../components/AddTeamForm';
-import TeamCard from '../components/TeamCard';
 import MatchHistoryList from '../components/MatchHistoryList';
 import { Team } from '../models/types';
 import { colors, spacing, fontSize, borderRadius } from '../theme/theme';
@@ -134,8 +130,6 @@ export default function RotationScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Current Match */}
-        {/* <CurrentMatch teamA={teamA} teamB={teamB} /> */}
 
         {/* Add Team Form */}
         <AddTeamForm onAddTeam={handleAddTeam} />

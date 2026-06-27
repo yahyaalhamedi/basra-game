@@ -5,9 +5,6 @@
 /** Target score to win a game */
 export const TARGET_SCORE = 52;
 
-/** App name in Arabic */
-export const APP_NAME = 'حاسبة الباصرة';
-
 /** Team labels */
 export const TEAM_A_LABEL = 'لنا';
 export const TEAM_B_LABEL = 'لهم';
@@ -24,17 +21,12 @@ export const BTN_RESET = 'إعادة تعيين';
 export const BTN_YES = 'نعم';
 export const BTN_CANCEL = 'إلغاء';
 export const BTN_SAVE = 'حفظ';
-export const BTN_DELETE = 'حذف';
-export const BTN_EDIT = 'تعديل';
 export const BTN_ADD_ROUND = 'سجل الجولة';
 
 /** Dialog messages */
 export const MSG_WINNER = 'فاز الفريق!';
 export const MSG_START_NEXT = 'بدء اللعبة التالية؟';
 export const MSG_CONFIRM_RESET = 'هل أنت متأكد من إعادة التعيين؟';
-export const MSG_CONFIRM_DELETE = 'هل أنت متأكد من حذف هذا الفريق؟';
-export const MSG_NO_TEAMS = 'أضف فريقين على الأقل';
-export const MSG_CURRENT_MATCH = 'المباراة الحالية';
 
 /** Form placeholders */
 export const PLACEHOLDER_PLAYER1 = 'اسم اللاعب الأول';
@@ -45,8 +37,3 @@ export const MATCH_HISTORY_TITLE = 'سجل المباريات';
 
 /** Leaderboard */
 export const LEADERBOARD_TITLE = 'لوحة المتصدرين';
-export const COL_RANK = 'المركز';
-export const COL_TEAM = 'الفريق';
-export const COL_PLAYED = 'لعب';
-export const COL_WINS = 'فوز';
-export const COL_WIN_PCT = 'نسبة الفوز';

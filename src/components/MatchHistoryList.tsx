@@ -148,13 +148,12 @@ const styles = StyleSheet.create({
 
   /** Toggle header row */
   header: {
-    flexDirection: 'row', // RTL
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: colors.surface,
     paddingVertical: spacing.md,
     paddingHorizontal: spacing.md,
-    // borderRadius: borderRadius.lg,
     marginBottom: 2,
     minHeight: 52,
   },
@@ -183,23 +182,19 @@ const styles = StyleSheet.create({
 
   /** Individual match card */
   matchCard: {
-    // flexDirection: 'column-',
     backgroundColor: colors.surfaceLight,
     borderRadius: borderRadius.md,
     padding: spacing.md,
   },
 
-  /** Row inside match card (winner / loser) */
   matchRow: {
-    flexDirection: 'row', // RTL
+    flexDirection: 'row',
     alignItems: 'center',
     marginBottom: spacing.xs,
   },
 
-  /** Trophy emoji */
   trophy: {
     fontSize: fontSize.md,
-    // marginLeft: spacing.sm,
   },
 
   /** Invisible spacer to align loser text with winner text */

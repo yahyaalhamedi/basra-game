@@ -63,16 +63,6 @@ export const useTournamentStore = create<TournamentState>()(
       resetTournament: () => {
         set({ ...initialState });
       },
-
-      getLeaderboard: () => {
-        return [...get().entries].sort((a, b) => {
-          // Sort by win percentage descending, then by total wins descending
-          const aPct = a.gamesPlayed > 0 ? a.wins / a.gamesPlayed : 0;
-          const bPct = b.gamesPlayed > 0 ? b.wins / b.gamesPlayed : 0;
-          if (bPct !== aPct) return bPct - aPct;
-          return b.wins - a.wins;
-        });
-      },
     }),
     {
       name: 'basra-tournament-storage',

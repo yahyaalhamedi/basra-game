@@ -128,16 +128,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
-  /** Team name label beneath the circle */
-  label: {
-    fontSize: fontSize.md,           // 16
-    color: colors.textSecondary,
-    textAlign: 'center',
-    writingDirection: 'rtl',
-    fontWeight: '600',
-    marginTop: spacing.xs,
-  },
 });
 
 export default ScoreCircle;

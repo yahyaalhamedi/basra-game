@@ -84,7 +84,6 @@ export interface RotationState {
     rounds: ScoreRound[]
   ) => void;
   resetAll: () => void;
-  getCurrentMatch: () => { teamA: Team | null; teamB: Team | null };
 }
 
 /**
@@ -95,5 +94,4 @@ export interface TournamentState {
 
   recordMatch: (winner: Team, loser: Team) => void;
   resetTournament: () => void;
-  getLeaderboard: () => TournamentEntry[];
 }

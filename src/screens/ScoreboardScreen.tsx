@@ -27,7 +27,6 @@ import {
   MSG_CONFIRM_RESET,
   BTN_YES,
   BTN_CANCEL,
-  APP_NAME,
   BTN_ADD_ROUND,
   TAB_SCOREBOARD,
 } from '../utils/constants';
@@ -172,26 +171,19 @@ export default function ScoreboardScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* Current Match Banner */}
-        {/* {(currentTeamA || currentTeamB) && ( */}
-          <View style={styles.matchBanner}>
-            <Text style={styles.matchBannerTeamA}>
-              {currentTeamA ? teamAName : TEAM_A_LABEL}
-            </Text>
-            <Text style={styles.matchBannerVs}>ضد</Text>
-            <Text style={styles.matchBannerTeamB}>
-              {currentTeamB ? teamBName : TEAM_B_LABEL}
-            </Text>
-          </View>
-        {/* )} */}
+        <View style={styles.matchBanner}>
+          <Text style={styles.matchBannerTeamA}>
+            {currentTeamA ? teamAName : TEAM_A_LABEL}
+          </Text>
+          <Text style={styles.matchBannerVs}>ضد</Text>
+          <Text style={styles.matchBannerTeamB}>
+            {currentTeamB ? teamBName : TEAM_B_LABEL}
+          </Text>
+        </View>
 
         {/* Score Display */}
         <View style={styles.scoreContainer}>
-          {/* Team B (Right in RTL = shows on right) */}
-           {/* Team A (Left in RTL = shows on left) */}
           <View style={styles.scoreColumn}>
-            {/* <Text style={[styles.teamLabel, { color: colors.teamA }]}>
-              {TEAM_A_LABEL}
-            </Text> */}
             <Text style={[styles.scoreValue, { color: colors.teamA }]}>
               {teamATotal}
             </Text>
@@ -203,17 +195,10 @@ export default function ScoreboardScreen() {
           </View>
 
           <View style={styles.scoreColumn}>
-            {/* <Text style={[styles.teamLabel, { color: colors.teamB }]}>
-              {TEAM_B_LABEL}
-            </Text> */}
             <Text style={[styles.scoreValue, { color: colors.teamB }]}>
               {teamBTotal}
             </Text>
           </View>
-
-          
-
-         
         </View>
 
         {/* Score Input Circles */}
@@ -223,7 +208,6 @@ export default function ScoreboardScreen() {
             bgColor={colors.teamABg}
             onPress={() => handleCirclePress('A')}
             pendingScore={draftScoreA}
-            // teamLabel={TEAM_A_LABEL}
           />
           <ScoreCircle
             color={colors.teamB}
@@ -355,12 +339,6 @@ const styles = StyleSheet.create({
   scoreColumn: {
     flex: 1,
     alignItems: 'center',
-  },
-  teamLabel: {
-    fontSize: fontSize.lg,
-    fontWeight: '700',
-    marginBottom: spacing.xs,
-    writingDirection: 'rtl',
   },
   scoreValue: {
     fontSize: fontSize.giant,

@@ -121,7 +121,7 @@ export default function LeaderboardScreen() {
     <SafeAreaView style={styles.container} edges={['top']}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>🏆 {LEADERBOARD_TITLE}</Text>
+        <Text style={styles.headerTitle}>{LEADERBOARD_TITLE}</Text>
       </View>
 
       {leaderboard.length === 0 ? (
